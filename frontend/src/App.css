@@ -1,3 +1,5 @@
+/* CSS for all screen sizes */
+
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
@@ -54,13 +56,11 @@ h1 {
 }
 
 .loading_text {
-
   font-size: 25px;
   margin-top: 100px;
-
 }
 
-.updating_seats{
+.updating_seats {
   text-align: center;
   margin-left: 30px;
   margin-top: 3px;
@@ -202,15 +202,13 @@ button:hover {
   background-color: #45a049;
 }
 
-.unbookBtn {
-  background-color: rgb(245, 96, 96);
-  color: white;
+.resetBtn {
+  background: blue;
+  margin: 10px 0px;
 }
-
-.unbookBtn:hover {
-  background-color: red;
+.resetBtn:hover{
+  background: rgb(103, 103, 161);
 }
-
 /* input conatiner CSS End */
 
 /* booking-section end CSS */
@@ -240,14 +238,25 @@ button:hover {
 
 /* Responsive styles */
 
-@media (max-width: 768px) {
+@media (max-width: 576px) {
   .main_container {
     flex-direction: column;
     align-items: center;
   }
 
   .seat-container {
-    max-width: 90%;
+    max-width: none;
+    width: 250px;
+  }
+
+  .row {
+    justify-content: space-evenly;
+  }
+
+  .seat {
+    width: 40px;
+    height: 40px;
+    margin: 3px;
   }
 
   .booking-section {
@@ -255,8 +264,48 @@ button:hover {
     max-width: none;
   }
 
+  #currentBookedSeats {
+    flex-direction: column;
+  }
+
   input[type="number"],
+  input[type="text"],
   button {
     width: 100%;
   }
+}
+
+@media (min-width: 576px) and (max-width: 992px) {
+  .main_container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .seat-container {
+    max-width: none;
+    width: 650px;
+
+  }
+
+  .row {
+    justify-content: space-evenly;
+    width: 100%;
+  }
+
+  .seat {
+    width: 40px;
+    height: 40px;
+    margin: 3px;
+  }
+
+  .booking-section {
+    width: 90%;
+    margin-top: 20px;
+
+  }
+
+  #currentBookedSeats {
+    flex-direction: column;
+  }
+
 }
