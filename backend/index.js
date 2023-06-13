@@ -5,9 +5,12 @@ const app = express()
 const ConnectDb = require("./config/Db.connect")
 const cors = require("cors");
 const seatsRouter = require("./routes/seats.routes");
+const latestSeatsRouter = require("./routes/latestSeats.routes");
 
+app.use(cors({
+    origin: "*"
+}));
 
-app.use(cors())
 app.use(express.json())
 
 // home route
@@ -18,7 +21,8 @@ app.get("/", (req, res) => {
 
 // All Routes
 
-app.use('/api/seats',seatsRouter)
+app.use('/api/seats', seatsRouter)
+app.use('/api/latest', latestSeatsRouter)
 
 
 const PORT = process.env.PORT || 8085;

@@ -141,11 +141,24 @@ const unbookSeats = async (req, res) => {
 };
 
 
+// reset all booked
+
+const resetAllBooked = async (req, res) => {
+  try {
+    await SeatModel.updateMany({ isBooked: true }, { isBooked: false });
+    res.status(200).send({ message: "All the seats are available for booking." });
+  } catch (error) {
+
+    res.status(400).send({ message: "Something went wrong", error: error.message });
+  }
+}
+
 
 
 module.exports = {
   generateSeats,
   getAllSeats,
   bookingSeats,
-  unbookSeats
+  unbookSeats,
+  resetAllBooked
 }
