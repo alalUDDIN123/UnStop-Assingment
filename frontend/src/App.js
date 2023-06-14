@@ -5,11 +5,13 @@ import { reducer } from './reducers/Reducer';
 import initialState from './reducers/IntialState';
 import { FETCH_SEATS_SUCCESS, SET_LOADING } from './reducers/types';
 
+// const baseAPI = 'http://localhost:8080/api/seats';
 const baseAPI = 'https://stormy-sunglasses-fly.cyclic.app/api/seats';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [latestSeats, setLatestSeats] = useState([])
+  const [isResetAll, setIsResetAll] = useState(false)
 
 
   useEffect(() => {
@@ -143,9 +145,13 @@ function App() {
         },
       });
       const responseData = await response.json();
-      console.log(responseData);
-      setLatestSeats([])
+      if(responseData && responseData.message==="All the seats are available for booking."){
+        setIsResetAll(true)
+        setLatestSeats([])
+      }
+
     } catch (error) {
+      console.log(error);
 
     }
     dispatch({ type: SET_LOADING, payload: false });
@@ -176,6 +182,7 @@ function App() {
           isLoading={state.isLoading}
           bookedSeats={latestSeats}
           resetAllSeats={resetAllSeats}
+          isResetAll={isResetAll}
 
         />
       </div>

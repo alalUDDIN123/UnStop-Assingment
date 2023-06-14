@@ -6,6 +6,7 @@ import {
   latestSeatsReducer,
 } from "../reducers/latestSeatsReducer";
 
+// const baseAPI = "http://localhost:8080/api/latest";
 const baseAPI = "https://stormy-sunglasses-fly.cyclic.app/api/latest";
 
 const BookingSection = ({
@@ -15,9 +16,10 @@ const BookingSection = ({
   isLoading,
   bookedSeats,
   resetAllSeats,
+  isResetAll
 }) => {
   const [state, dispatch] = useReducer(latestSeatsReducer, initialState);
-  console.log(" state.latestSeats", state && state.latestSeats);
+  // console.log(" state.latestSeats", state && state.latestSeats);
 
   const getLatestSeats = useCallback(async () => {
     try {
@@ -30,6 +32,7 @@ const BookingSection = ({
   }, []);
 
   const updateLatestSeats = useCallback(async (seats) => {
+    // console.log("isResetAll called in updateLatestSeats");
     try {
       const response = await fetch(`${baseAPI}/update/all`, {
         method: "PATCH",
@@ -45,13 +48,16 @@ const BookingSection = ({
     }
   }, []);
 
+
+  useEffect(() => {
+    if (bookedSeats.length > 0 || isResetAll) {
+      updateLatestSeats(bookedSeats);
+    }
+  }, [bookedSeats, updateLatestSeats,isResetAll]);
+
   useEffect(() => {
     getLatestSeats();
   }, [getLatestSeats]);
-
-  useEffect(() => {
-    updateLatestSeats(bookedSeats);
-  }, [bookedSeats, updateLatestSeats]);
 
   const handleReserveSeats = () => {
     reserveSeats();
